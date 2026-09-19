@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darukaa.Earth - Sites</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7f5;
+            color: #26352d;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 230px;
+            height: 100vh;
+            background: #123d2b;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .nav-item {
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #286044;
+        }
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #6d786f;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: #eef4f0;
+            color: #145c3a;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 15px;
+            background: #dff3e6;
+            color: #17643d;
+            font-size: 13px;
+        }
+
+        .empty {
+            padding: 25px;
+            text-align: center;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+   
+
+    <div class="nav-item" onclick="window.location.href='home.html'">
+        📊 Dashboard
+    </div>
+
+    <div class="nav-item" onclick="window.location.href='projects.html'">
+        🏆 Projects
+    </div>
+
+    <div class="nav-item active">
+        📍 Sites
+    </div>
+
+    <div class="nav-item" onclick="window.location.href='analytics.html'">
+        📊 Analytics
+    </div>
+
+    <div class="nav-item" onclick="window.location.href='settings.html'">
+        ⚙️ Settings
+    </div>
+
+</aside>
+    <main class="main">
+
+        <h1>Environmental Sites</h1>
+
+        <p class="subtitle">
+            Sites registered under the Western Ghats Restoration project.
+        </p>
+
+        <div class="card">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Site Name</th>
+                        <th>Area</th>
+                        <th>Carbon Stored</th>
+                        <th>Biodiversity</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="sitesTable">
+                    <tr>
+                        <td colspan="5" class="empty">
+                            Loading sites...
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+    <script>
+
+        fetch("http://127.0.0.1:5000/api/sites")
+            .then(response => response.json())
+            .then(sites => {
+
+                const table = document.getElementById("sitesTable");
+
+                if (sites.length === 0) {
+                    table.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="empty">
+                                No environmental sites found.
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                table.innerHTML = "";
+
+                sites.forEach(site => {
+
+                    const row = document.createElement("tr");
+
+                    row.innerHTML = `
+                        <td>
+                            <strong>${site.name}</strong>
+                        </td>
+
+                        <td>
+                            ${Number(site.area_hectares || 0).toFixed(2)} ha
+                        </td>
+
+                        <td>
+                            ${site.carbon_stored ?? "Not added"} tonnes
+                        </td>
+
+                        <td>
+                            ${site.biodiversity_score ?? "Not added"} / 100
+                        </td>
+
+                        <td>
+                            <span class="badge">Active</span>
+                        </td>
+                    `;
+
+                    table.appendChild(row);
+                });
+
+            })
+            .catch(error => {
+
+                console.error("Unable to load sites:", error);
+
+                document.getElementById("sitesTable").innerHTML = `
+                    <tr>
+                        <td colspan="5" class="empty">
+                            Unable to connect to the server.
+                        </td>
+                    </tr>
+                `;
+            });
+
+    </script>
+
+</body>
+</html>

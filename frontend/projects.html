@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darukaa.Earth - Projects</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7f5;
+            color: #26352d;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 230px;
+            height: 100vh;
+            background: #123d2b;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .nav-item {
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #286044;
+        }
+
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #6d786f;
+            margin-bottom: 30px;
+        }
+
+        .project-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            max-width: 800px;
+        }
+
+        .project-title {
+            font-size: 25px;
+            font-weight: bold;
+            color: #145c3a;
+            margin-bottom: 12px;
+        }
+
+        .status {
+            display: inline-block;
+            background: #dff3e6;
+            color: #17643d;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .info-box {
+            background: #f4f7f5;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .info-box strong {
+            display: block;
+            font-size: 22px;
+            color: #145c3a;
+            margin-top: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+    <div class="nav-item" onclick="window.location.href='home.html'">
+        📊 Dashboard
+    </div>
+
+    <div class="nav-item active">
+        🏆 Projects
+    </div>
+
+    <div class="nav-item" onclick="window.location.href='sites.html'">
+        📍 Sites
+    </div>
+
+    <div class="nav-item" onclick="window.location.href='analytics.html'">
+        📊 Analytics
+    </div>
+
+    <div class="nav-item" onclick="window.location.href='settings.html'">
+        ⚙️ Settings
+    </div>
+
+</aside>
+
+    <main class="main">
+
+        <h1>Projects</h1>
+
+        <p class="subtitle">
+            Environmental restoration projects managed by the administrator.
+        </p>
+
+        <div class="project-card">
+
+            <div class="project-title">
+                Western Ghats Restoration
+            </div>
+
+            <div class="status">
+                ● Active
+            </div>
+
+            <p>
+                Ecosystem restoration and biodiversity monitoring project
+                focused on protecting and restoring environmental sites
+                across the Western Ghats.
+            </p>
+
+            <div class="info">
+
+                <div class="info-box">
+                    Sites
+                    <strong id="siteCount">0</strong>
+                </div>
+
+                <div class="info-box">
+                    Area
+                    <strong id="totalArea">0 ha</strong>
+                </div>
+
+                <div class="info-box">
+                    Carbon
+                    <strong id="totalCarbon">0 t</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+
+        fetch("http://127.0.0.1:5000/api/sites")
+            .then(response => response.json())
+            .then(sites => {
+
+                const area = sites.reduce(
+                    (sum, site) =>
+                        sum + Number(site.area_hectares || 0), 0
+                );
+
+                const carbon = sites.reduce(
+                    (sum, site) =>
+                        sum + Number(site.carbon_stored || 0), 0
+                );
+
+                document.getElementById("siteCount").textContent =
+                    sites.length;
+
+                document.getElementById("totalArea").textContent =
+                    area.toFixed(2) + " ha";
+
+                document.getElementById("totalCarbon").textContent =
+                    carbon.toFixed(2) + " t";
+            })
+            .catch(error => {
+                console.error("Unable to load project data:", error);
+            });
+
+    </script>
+
+</body>
+</html>

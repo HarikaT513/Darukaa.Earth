@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Darukaa.Earth - Settings</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7f5;
+            color: #26352d;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 230px;
+            height: 100vh;
+            background: #123d2b;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .nav-item {
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #286044;
+        }
+
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #6d786f;
+            margin-bottom: 30px;
+        }
+
+        .settings-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            max-width: 750px;
+            margin-bottom: 25px;
+        }
+
+        .settings-card h2 {
+            color: #145c3a;
+            margin-bottom: 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #6d786f;
+        }
+
+        .value {
+            font-weight: bold;
+        }
+
+        .active {
+            color: #17643d;
+        }
+
+        .logout {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 20px;
+            background: #145c3a;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .logout:hover {
+            background: #0f472d;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+
+
+    <div class="nav-item" onclick="window.location.href='home.html'">
+        📊 Dashboard
+    </div>
+    
+     <div class="nav-item" onclick="window.location.href='projects.html'"> 🏆 Projects</div>
+
+    <div class="nav-item" onclick="window.location.href='sites.html'">
+        📍 Sites
+    </div>
+
+    <div class="nav-item" onclick="window.location.href='analytics.html'">
+        📊 Analytics
+    </div>
+
+    <div class="nav-item active" onclick="window.location.href='settings.html'"></div>
+        ⚙️ Settings
+    </div>
+
+</aside>
+
+    <main class="main">
+
+        <h1>Settings</h1>
+
+        <p class="subtitle">
+            Administrator and project configuration.
+        </p>
+
+        <div class="settings-card">
+
+            <h2>Administrator</h2>
+
+            <div class="row">
+                <span class="label">Role</span>
+                <span class="value">Administrator</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Email</span>
+                <span class="value">admin@darukaa.earth</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Account Status</span>
+                <span class="value active">Active</span>
+            </div>
+
+        </div>
+
+        <div class="settings-card">
+
+            <h2>Project Configuration</h2>
+
+            <div class="row">
+                <span class="label">Project</span>
+                <span class="value">Western Ghats Restoration</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Database</span>
+                <span class="value">PostgreSQL + PostGIS</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Mapping</span>
+                <span class="value">Leaflet</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Backend</span>
+                <span class="value">Flask</span>
+            </div>
+
+        </div>
+
+        <a href="login.html" class="logout">
+            Logout
+        </a>
+
+    </main>
+
+</body>
+</html>
